@@ -14,7 +14,7 @@
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>${pageTitle}</title>
 <!-- reference our style sheet -->
-  <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/nav-style.css" />
+ <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/nav-style.css" >
 
 <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 	
@@ -26,97 +26,111 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
+
 									
 	<header class="navbar">
-	<div class="navbar-primar">
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<a href="${pageContext.request.contextPath}" >Home</a>
+	<div class="navbar-primar" >
+	<!-- 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 			<a href="${pageContext.request.contextPath}/student/list" class="btn btn-link">List of Students</a>
 			<a href="${pageContext.request.contextPath}/office/list" class="btn btn-link">List of Offices</a>
 			<a href="${pageContext.request.contextPath}/authorities/list" class="btn btn-link">List Authorities</a>
 			<a href="${pageContext.request.contextPath}/company/list" class="btn btn-link">List Companies</a>
 			<a href="<c:url value="/student/updateStudentList"></c:url>" class="btn btn-link">Update a Student</a>	
 			<a href="<c:url value="/office/updateOfficeList"></c:url>" class="btn btn-link">Update an Office</a>	
+			<a href="<c:url value="/company/updateCompanyList"></c:url>" class="btn btn-link">Update a Company</a>
 			<a href="<c:url value="/student/addStudent"></c:url>" class="btn btn-link">Add a Student</a>
 			<a href="<c:url value="/office/addOffice"></c:url>" class="btn btn-link">Add an Office</a>		
 			<a href="<c:url value="/company/addCompany"></c:url>" class="btn btn-link">Add a Company</a>
 			
-			<a class="btn btn-link"  id="log-hide" name="logout-nav"> Logout</a>
+			<a id="log-hide" class="btn btn-link" name="logout-nav"> Logout</a>
 		</sec:authorize>
 		
 		
 		<sec:authorize access="hasRole('ROLE_STUDENT')">
-		<a href="${pageContext.request.contextPath}" >Home</a>
-	<!--  	<a href="${pageContext.request.contextPath}/job_offers/list" class="btn btn-link">List of job offers</a>-->	
+			<a href="${pageContext.request.contextPath}/job_offers/list" class="btn btn-link">List of job offers</a>
 			<a href="<c:url value="/stdapps/addStdapp"></c:url>" class="btn btn-link">Make Application</a>
-			<a href="${pageContext.request.contextPath}/stdapps/listforstudents" class="btn btn-link">View My Application</a>
-			<a class="btn btn-link"  id="log-hide" name="logout-nav"> Logout</a>
+			<a id="log-hide" class="btn btn-link" name="logout-nav"> Logout</a>
 		</sec:authorize>
 		
 		
 		<sec:authorize access="hasRole('ROLE_OFFICE')">
-		<a href="${pageContext.request.contextPath}" >Home</a>
-			<a href="${pageContext.request.contextPath}/student/list" class="btn btn-link">List of Students</a>
-			<a href="${pageContext.request.contextPath}/job_offers/list" class="btn btn-link">List of job offers</a>
-			<a href="<c:url value="/job_offers/updatejob_offersList"></c:url>" class="btn btn-link">Update a Job Offer</a>
-			<a href="<c:url value="/company/updateCompanyList"></c:url>" class="btn btn-link">Update A Company</a>
-			<a href="<c:url value="/company/list"></c:url>" class="btn btn-link">View The List Of Companies</a>
-			<a class="btn btn-link"  id="log-hide" name="logout-nav"> Logout</a>
+	
+			<a href="${pageContext.request.contextPath}/student/list" >List of Students</a>
+		
+			<a href="${pageContext.request.contextPath}/job_offers/list" >List of job offers</a>
+		
+			<a href="<c:url value="/job_offers/updatejob_offersList"></c:url>" >Update a Job Offer</a>
+			
+			<a href="${pageContext.request.contextPath}/login" id="log-hide"  name="logout-nav"> Logout</a>
+		
 		</sec:authorize>
 		
 		
 		<sec:authorize access="hasRole('ROLE_COMPANY')">
-			<a href="${pageContext.request.contextPath}" >Home</a>
-		<a href="${pageContext.request.contextPath}/stdapps/listforcompanies" class="btn btn-link">List of Student Applications</a>
+		<a href="${pageContext.request.contextPath}/student/list" class="btn btn-link">List of Students</a>
 			<a href="<c:url value="/job_offers/updatejob_offersList"></c:url>" class="btn btn-link">Update a Job Offer</a>
 			<a href="<c:url value="/job_offers/addJob_offers"></c:url>" class="btn btn-link">Add a Job Offer</a>
-			<a class="btn btn-link"  id="log-hide" name="logout-nav"> Logout</a>
-		</sec:authorize>
+			<a id="log-hide" class="btn btn-link" name="logout-nav"> Logout</a> 
+		</sec:authorize>-->
+	<a href="${pageContext.request.contextPath}/menu" >Home</a>
+	<a href="<c:url value="/stdapps"></c:url>" >List of Students</a>
+		
+			<a href="${pageContext.request.contextPath}/CompanyForm" >Add Job Offers</a>
+		<a href="${pageContext.request.contextPath}/ListOffers" >List of Job Offers</a>
+			<a href="<c:url value="/update"></c:url>" >Update a Job Offer</a>
+			
+			<a href="${pageContext.request.contextPath}/login" id="log-hide"  name="logout-nav" onclick="logout();"> Logout</a>
+
 	</div>
 	</header>
 </head>
 	
 <body>
 	<script type="text/javascript">
+	   function logout() {
+
+		   sessionStorage.clear();
+			localStorage.clear();
+	   } 
 	var x = document.getElementById("log-hide");
 	switch(window.location.pathname) {
-	  case "/Springpraktikh/job_offers/updatejob_offersList":
+	  case "/Springmvc1/job_offers/updatejob_offersList":
 	    // code block
 	    x.style.display = "none";
 	    break;
-	  case "/Springpraktikh/student/updateStudentList":
+	  case "/Springmvc1/student/updateStudentList":
 	    // code block
 	    x.style.display = "none";
 	    break;
-	  case "/Springpraktikh/office/updateOfficeList":
+	  case "/Springmvc1/office/updateOfficeList":
 		    // code block
 		    x.style.display = "none";
 		    break;
-	  case "/Springpraktikh/company/updateCompanyList":
+	  case "/Springmvc1/company/updateCompanyList":
 		    // code block
 		    x.style.display = "none";
 		    break;
-	  case "/Springpraktikh/student/addStudent":
+	  case "/Springmvc1/student/addStudent":
 		    // code block
 		    x.style.display = "none";
 		    break;
-	  case "/Springpraktikh/office/addOffice":
+	  case "/Springmvc1/office/addOffice":
 		    // code block
 		    x.style.display = "none";
 		    break;
-	  case "/Springpraktikh/company/addCompany":
+	  case "/Springmvc1/company/addCompany":
 		    // code block
 		    x.style.display = "none";
 		    break;
-	  case "/Springpraktikh/stdapps/addStdapp":
+	  case "/Springmvc1/stdapps/addStdapp":
 		    // code block
 		    x.style.display = "none";
 		    break;
-	  case "/Springpraktikh/job_offers/updatejob_offersList":
+	  case "/Springmvc1/job_offers/updatejob_offersList":
 		    // code block
 		    x.style.display = "none";
 		    break;
-	  case "/Springpraktikh/job_offers/addJob_offers":
+	  case "/Springmvc1/job_offers/addJob_offers":
 		    // code block
 		    x.style.display = "none";
 		    break;

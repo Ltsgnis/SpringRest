@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-  <display-name>SpringPraktikh</display-name>
+  <display-name>SpringRest</display-name>
   <servlet>
     <servlet-name>dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -26,20 +26,4 @@
     <filter-name>encoding-filter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-   <error-page>
-    <error-code>400</error-code>
-    <location>/WEB-INF/view/error-400.jsp</location>
-  </error-page>
-  <error-page>
-    <error-code>401</error-code>
-    <location>/WEB-INF/view/error-401.jsp</location>
-  </error-page>
-  <error-page>
-    <error-code>403</error-code>
-    <location>/WEB-INF/view/error-403.jsp</location>
-  </error-page>
-  <error-page>
-    <error-code>500</error-code>
-    <location>/WEB-INF/view/error-500.jsp</location>
-  </error-page>
 </web-app>

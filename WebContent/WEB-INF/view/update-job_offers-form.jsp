@@ -1,61 +1,45 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ include file="/WEB-INF/view/jspf/header.jspf"%>
+<%@ include file="/WEB-INF/view/jspf/header.jspf" %>
+
+<table class="ui celled  striped table" id="form"></table>
 
 
+	
+	<script type="text/javascript">
+	  window.onload =function(){
+	    	var table="<h3>Update a Job_offer</h3><div class=\"form-group\"><label>ID</label><input type=\"text\" class=\"form-control\" id=\"id\"/></div><div class=\"form-group\"><label>Company Name</label><input type=\"text\" class=\"form-control\" id=\"company_name\"/></div><div class=\"form-group\"><label>Job Name</label><input type=\"text\" class=\"form-control\" id=\"job_name\"/></div><div class=\"form-group\"><label>Available Positions</label><input type=\"number\" class=\"form-control\" id=\"available_positions\"/></div><div class=\"form-group\"><label>Job Description</label><input type=\"text\" class=\"form-control\" id=\"job_description\"/></div><button class=\"btn btn-primary\" type=\"submit\" onclick=\"Add();\" value=\"Authenticate\">Save</button>"
+	 
+	      
+	        document.getElementById("form").innerHTML = table;
+	    }
+	function Add() {
+        var username = sessionStorage.getItem("user");
+        var password = sessionStorage.getItem("psw");
+        var id = document.getElementById('id').value;
+        var company_name = document.getElementById('company_name').value;
+        var job_name = document.getElementById('job_name').value;
+        var available_positions = document.getElementById('available_positions').value;
+        var job_description = document.getElementById('job_description').value;
 
-<h3>Update a Job Offer</h3>
-
-<form:form action="updateJob_offers" modelAttribute="job_offers"
-	method="POST" class="ui form">
-	<label>ID of Job Offer</label>
-	<div class="input-group mb-3">
-
-		<form:input path="id" type="number" class="form-control" placeholder="xxxxx"
-			aria-label="Recipient's username" aria-describedby="button-addon2" />
-
-	</div>
-
-
-	<label>Company Name</label>
-	<div class="input-group mb-3">
-
-		<form:input path="companyName" type="text" class="form-control" placeholder="Johnson's Company"
-			aria-label="Recipient's username" aria-describedby="button-addon2" />
-	</div>
-
-	<label>Job Name</label>
-	<div class="input-group mb-3">
-
-		<form:input path="jobName" type="text" class="form-control" placeholder="Entrepreneur"
-			aria-label="Recipient's username" aria-describedby="button-addon2" />
-	</div>
-	<label>Available Possitions</label>
-	<div class="input-group mb-3">
-
-		<form:input path="availablePositions" type="number" class="form-control" placeholder="xx"
-			aria-label="Recipient's username" aria-describedby="button-addon2" />
-	</div>
-	<label>Job Description</label>
-	<div class="input-group mb-3">
-		<form:input path="jobDescription" type="text" class="form-control" 
-			aria-label="Recipient's username" aria-describedby="button-addon2" />
-	</div>
-
-	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_OFFICE')">
-
-		<label>Condition</label>
-		<div class="input-group mb-3">
-			<form:input path="enabled" type="text" class="form-control"
-				placeholder="(1=Accept or 0=Pending)"
-				aria-label="Recipient's username" aria-describedby="button-addon2" />
-		</div>
-	</sec:authorize>
-
-
-	<div class="input-group-append">
-		<button class="btn btn-outline-dark" type="submit"
-			id="button-addon2" style="margin: auto; display: block;">Save</button>
-	</div>
-
-</form:form>
-
+     //   var params = 'orem=ipsum&name=binny';
+        var  xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:8080/Springpraktikh/api/job_offers/update', true, username, password);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                alert('User\'s name is ' + xhr.responseText);
+            }
+            else {
+                alert('Request failed.  Returned status of ' + xhr.status);
+            }
+        };
+        xhr.send('id='+id+'&company_name='+company_name+'&job_name='+job_name+'&available_positions='+available_positions+'&job_description='+job_description+'');
+   
+        window.location.href ='http://localhost:8080/SpringRest/ListOffers'
+       // localStorage.clear();
+    }
+	</script>
+	
+	
+</div>
+</div>

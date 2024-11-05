@@ -7,72 +7,20 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<!--
-<!DOCTYPE html>
-<html class="log">
-
-<head>
-
-  <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css" />
-<link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>-->
-
-<!--  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">-->
-<!--
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
-<link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-</head>
-<body>
 
 
-	<h2 id="login">Login</h2>
-<div class="form-group">
-	
 
 
-   
-	<form:form action="${pageContext.request.contextPath}/authUser" method="POST">
-	
-	<div class="field"  >
+<!-- 
+Ayton ton kwdika kai ta css tou ta exoume pare apo auto to site:
+https://colorlib.com/wp/html5-and-css3-login-forms/ -->
 
-
-			<label class="form-label">User Id</label> 
-			<input type="text" name="username"/>
-		
-			<label class="form-label">Password</label> 
-			<input type="password" name="password"/>
-			<div style="padding:10px;">
-			<button class="btn btn-primary" type="submit" >Login</button>
-			</div>
-			</div>
-			</div>
-			
-		<c:if test="${param.error != null}">
-		<!-- 
-					<p>Sorry! Invalid username/password!</p>
-		 -->
-<!--	<p> <font color="red">Sorry! Invalid username/password!</font> </p>
-			<p> <font color="red">If you are sure your entered credits are valid, you may be not allowed to make a job application form yet</font> </p>
-			
-		</c:if>
-			
-	</form:form>
-
-
-	
-</div>
-</div>
-
-</body>
-</html>-->
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Login V6</title>
+<title>Login</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -83,18 +31,18 @@
 <link type="text/css" rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/css/util.css" />
 <!--===============================================================================================-->
-<link type="text/css" rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/js/main.js" />
-<!--===============================================================================================-->
+<!--<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/js/Login.js" />
+===============================================================================================-->
 </head>
-<body>
+<body >
 
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-85 p-b-20">
-				<form:form class="login100-form validate-form"
+				<!--<form:form class="login100-form validate-form"
 					action="${pageContext.request.contextPath}/authUser" method="POST">
-					<!--<form class="login100-form validate-form">-->
+					<form class="login100-form validate-form">-->
 					<span class="login100-form-title p-b-70"> Welcome </span>
 					<span class="login100-form-avatar"> <img
 						src="https://eduguidegr.s3.amazonaws.com/filer_public_thumbnails/filer_public/2014/07/12/hua1.gif__200x200_q75_background-%23fff_subsampling-2.jpg"
@@ -103,35 +51,116 @@
 
 					<div class="wrap-input100 validate-input m-t-85 m-b-35"
 						data-validate="Enter username">
-						<input class="input100" type="text" name="username" /> <span
+						<input id="user" class="input100" type="text" name="username" /> <span
 							class="focus-input100" data-placeholder="Username"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input m-b-50"
 						data-validate="Enter password">
-						<input class="input100" type="password" name="password" /> <span
+						<input id="pass" class="input100" type="password" name="password" /> <span
 							class="focus-input100" data-placeholder="Password"></span>
 					</div>
 
 					<div class="container-login100-form-btn">
 				
-						<button class="login100-form-btn" type="submit">Login</button>
+						<button id="login" class="login100-form-btn" type="submit" onclick="login();" value="Authenticate">Login</button>
+				
+					<p id="error" style="color:red; padding: 30px; font-size:120%;"></p>
+					
 					</div>
-
-						<c:if test="${param.error != null}">
-
-					
-	
-	<p style="color:red; padding: 30px; font-size:120%;"> Wrong Username/Password ! </p>
-
-			
-		</c:if>
-					
-					
-				</form:form>
+							
+				
+				<!--</form:form>-->
 			</div>
 		</div>
 	</div>
+	
+
+	<script  type="text/javascript">
+    'use strict';
+  
+    window.onload =function(){
+    	sessionStorage.clear();
+	localStorage.clear();
+
+    }
+    function login() {
+         var username = document.getElementById('user').value;
+        var password = document.getElementById('pass').value;
+        var id_comp;
+        var psw_comp;
+        var exists;
+     
+
+       
+
+       
+        //var ps=JSON.parse(xhr1.responseText);
+       // password = ps.password;
+     
+ 
+        
+      //  var info = sessionStorage.getItem("info");
+       // var obj = JSON.parse(info);
+ 
+    	 //  alert("count   "+count);
+    	   // alert("encode   "+ xhr1.responseText);
+    	   
+    	    var  xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8080/Springpraktikh/api/company/all', false, username, password);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+              //  alert('User\'s name is ' + xhr.responseText);
+            }
+            else {
+                //alert('Request failed.  Returned status of ' + xhr.status);
+            }
+        };
+        xhr.send();
+        
+        
+      	
+
+        
+      
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////     
+      var  xhr1 = new XMLHttpRequest();
+        xhr1.open('POST', 'http://localhost:8080/Springpraktikh/api/company/exists', true, username, password);
+        xhr1.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr1.onload = function() {
+            if (xhr1.status === 200) {
+              //  alert('User\'s name is \n ' + xhr1.responseText);
+            }
+            else {
+              //  alert('Request failed.  Returned status of ' + xhr1.status);
+            }
+            
+            exists=xhr1.responseText;
+            
+     	  //alert("EXISTS  "+exists);
+           if(exists=='true'){
+        	
+        	   sessionStorage.setItem("info",xhr.responseText);
+           	sessionStorage.setItem("user",username);
+           	sessionStorage.setItem("psw",password);
+        		 window.location.href ='http://localhost:8080/SpringRest/menu'
+           }else{
+        	   document.getElementById("error").innerHTML = "Wrong Username/Password !";
+        	   
+           }
+           
+            
+        };
+       xhr1.send('id='+username+'&password='+password+'');
+       
+       
+ 
+       
+      
+
+    }
+    
+</script>
 
 </body>
 </html>

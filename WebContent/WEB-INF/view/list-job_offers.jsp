@@ -1,59 +1,70 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/WEB-INF/view/jspf/header.jspf" %>
 <body>
-	<div class="ui segment" >
-	<h3>List of Job Offers</h3>
+	<div class="ui segment">
+	<h3 id="head">List of Job Offers</h3>
 
 	<!--  add our html table here -->
-	<table class="ui celled  striped table" id="list">
-		<thead>
-			<th>Company Name</th>
-			<th>Job Name</th>
-			<th>Available Positions</th>
-			<th>Job Description</th>
-		<sec:authorize access="hasRole('ROLE_OFFICE')">
-			<th>Accepted</th>
-			<th>Actions</th>
-		</sec:authorize>
-		</thead>
-		<!-- loop over and print our customers -->
-		<c:forEach var="tempjob_offers" items="${job_offers}">
-		
-			<tr>
-				<td>${tempjob_offers.companyName}</td>
-				<td>${tempjob_offers.jobName}</td>
-				<td>${tempjob_offers.availablePositions}</td>
-				<td>${tempjob_offers.jobDescription}</td>
-			<sec:authorize access="hasRole('ROLE_OFFICE')">	
-				<c:if test="${tempjob_offers.enabled=='0'}">
-							<td>Pending</td>
-					</c:if>	
-					<c:if test="${tempjob_offers.enabled=='1'}">
-						<td> Accepted! </td>
-					</c:if>
-					<c:if test="${tempjob_offers.enabled=='2'}">
-						<td> Denied </td>
-					</c:if>
-			
-			</sec:authorize>	
-				
-				<sec:authorize access="hasRole('ROLE_OFFICE')">
-			<td><a href="<c:url value="deleteJob_offers/${tempjob_offers.id}"></c:url>"><button class="btn btn-danger" type="submit" id="${tempjob_offers.id}"
-					name="deleteJob_offers" ><i class="remove user icon"></i>
-					 Delete</button></a>
-					 
-<c:if test="${tempjob_offers.enabled=='0'}">
-
-<a href="<c:url value="accepted/${tempjob_offers.id}"></c:url>"><button class="btn btn-success"
-								type="submit" id="${tempjob_offers.id}" name="accepted">
-								<i class="remove user icon"></i> Accept 
-							</button></a> </td>
-</c:if>
-				</sec:authorize>
-			</tr>
-		</c:forEach>
-	</table>
+	<table class="ui celled  striped table" id="list"></table>
 </div>
 
+
+<script type="text/javascript">
+    'use strict';
+    window.onload =function(){
+    	var username = sessionStorage.getItem("user");
+        var password =sessionStorage.getItem("psw");
+    	var  xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://localhost:8080/Springpraktikh/api/job_offers/offersforcompanies', false, username, password);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+              //  alert('User\'s name is ' + xhr.responseText);
+            }
+            else {
+                //alert('Request failed.  Returned status of ' + xhr.status);
+            }
+        };
+        xhr.send();
+        
+        sessionStorage.setItem("offerlist",xhr.responseText);
+    	var parser, xmlDoc,i;
+    	var info = sessionStorage.getItem("offerlist");
+    	//var x = document.getElementsByTagName("p");
+    	//document.getElementById("welcome").innerHTML = info;
+    	//<tr><th scope=\"row\">id</th><th scope=\"row\">firstname</th><th scope=\"row\">lastname</th><th scope=\"row\">email</th><th scope=\"row\">username</th><th scope=\"row\">password</th><th scope=\"row\">company_name</th><th scope=\"row\">enable</th></tr>
+    	var table=""
+    		var obj = JSON.parse(info);
+    	var count = Object.keys(obj.job_offersList).length;
+        var enabled;
+    		for (i = 0; i <count; i++) { 
+    			if(obj.job_offersList[i].enabled === 1){
+   				 enabled = "Accepted"; 
+   			}else if(obj.job_offersList[i].enabled === 0){
+   				 enabled = "Pending";
+   			}
+    			
+    		    table += "<tr><th scope=\"row\">ID</th><td>"+
+    		    obj.job_offersList[i].id + 
+    		    "</td></tr><tr><th scope=\"row\">Company Name</th><td>" +
+    		    obj.job_offersList[i].companyName +
+    		    "</td></tr><tr><th scope=\"row\">Job Name</th><td>" +
+    		    obj.job_offersList[i].jobName +
+    		    "</td></tr><tr><th scope=\"row\">Available Positions</th><td>" +
+    		    obj.job_offersList[i].availablePositions +
+    		    "</td></tr><tr><th scope=\"row\">Job Description</th><td>" +
+    		  		 obj.job_offersList[i].jobDescription +
+    		    "</td></tr><tr><th scope=\"row\">Condition</th><td>" +
+    		    enabled+"</td></tr>";
+    		  }
+    	
+        document.getElementById("list").innerHTML = table;
+    /*   parser = new DOMParser();
+xmlDoc = parser.parseFromString(info,"text/xml");
+
+document.getElementById("name").innerHTML =
+xmlDoc.getElementsByTagName("id")[0].childNodes[0].nodeValue;
+*/
+    }
+    </script>
 
 <%@ include file="/WEB-INF/view/jspf/footer.jspf" %>
